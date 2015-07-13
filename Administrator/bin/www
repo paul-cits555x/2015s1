@@ -1,0 +1,21 @@
+﻿#!/usr/bin/env node
+
+var debug = require('debug')('Administrator');
+var mongo = require('mongodb');
+
+var registry = require('../registry');
+var app = require('../app');
+
+app.set('port', process.env.PORT || 3000);
+
+mongo.MongoClient.connect('mongodb://localhost:27017/coderdojo', function (err, db) {
+	if (err) {
+		throw err;
+	}
+	var server = app.listen(app.get('port'), function() {
+		debug('Express server listening on port ' + server.address().port);
+	});
+	registry.setDatabase(db);
+});
+
+

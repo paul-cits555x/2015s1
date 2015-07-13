@@ -1,0 +1,21 @@
+﻿extends layout
+
+block content
+    h1= title
+    h2 Users
+    p
+        a(href='/administrator/add_user') add
+    p
+        each user, i in users
+            - var name = user.email ? user.email : 'null'
+            a(href='/administrator/users/#{user._id}') #{name}
+            br 
+    h2 Dojos 
+    p
+        a(href='/administrator/add_dojo') add
+    p
+        each dojo, i in dojos
+            - var name = dojo.name ? dojo.name : 'null'
+            a(href='/administrator/dojos/#{dojo._id}') #{name}
+            br
+ 

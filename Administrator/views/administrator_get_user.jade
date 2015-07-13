@@ -1,0 +1,46 @@
+﻿extends layout
+
+block content
+    h1= title
+    form#updateForm
+        p
+            span email 
+            input#email(type="email", placeholder="email", name="email" value="#{user.email}") 
+        p
+            span hdojos
+            br
+            each dojo, i in dojos
+                if user.dojos && -1 < user.dojos.indexOf(dojo._id) 
+                    input(id="cb_#{i+1}" type="checkbox" name="dojos[]" value="#{dojo._id}" checked)
+                else
+                    input(id="cb_#{i+1}" type="checkbox" name="dojos[]" value="#{dojo._id}")
+                - var name = dojo.name ? dojo.name : 'null'
+                a(href='/administrator/dojos/#{dojo._id}') #{name}
+                br
+    p
+        a#updateButton(href="#") update
+    p
+        a#removeButton(href="#") remove
+    p#error
+
+    script(src='/javascripts/ajax_gateway.js')
+    script.
+        $(document).ready(function () {
+            ajax_gateway = new AjaxGateway('/users/', '/administrator');
+            $("#removeButton").click(function () {
+                event.preventDefault();
+                ajax_gateway.remove('#{user._id}');
+            });
+            $("#updateButton").click(function () {
+                event.preventDefault();
+                var dojos=[]
+                $.each($("input[name='dojos[]']:checked"), function(){            
+                    dojos.push($(this).val());
+                });
+                ajax_gateway.update('#{user._id}', { 
+                    email: $('#email').val(),
+                    dojos: dojos
+                });
+            });
+        });
+  

@@ -1,0 +1,23 @@
+﻿extends layout
+
+block content
+    h1= title
+    p
+        form#insertForm
+            span email
+            input#email(type="email", placeholder="email", name="email") 
+        a#insert(href="#") add
+    p#error  
+
+    script(src='/javascripts/ajax_gateway.js')
+    script.
+        $(document).ready(function () {
+            ajax_gateway = new AjaxGateway('/users/', '/administrator');
+            $("#insert").click(function () {
+                event.preventDefault();
+                ajax_gateway.insert({ 
+                    email: $('#email').val() 
+                });
+            });
+        });
+  

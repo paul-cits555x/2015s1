@@ -1,0 +1,22 @@
+﻿extends layout
+
+block content
+    h1= title
+    p
+        form#insertForm
+            span name
+            input#name(type="text", placeholder="name", name="name") 
+        a#insert(href="#") add
+    p#error  
+
+    script(src='/javascripts/ajax_gateway.js')
+    script.
+        $(document).ready(function () {
+            ajax_gateway = new AjaxGateway('/dojos/', '/administrator');
+            $("#insert").click(function () {
+                event.preventDefault();
+                ajax_gateway.insert({ 
+                    name: $('#name').val() 
+                });
+            });
+        });
