@@ -7,7 +7,7 @@ var ObjectID = mongodb.ObjectID;
 
 var RouterFactory = function () {
     
-    this.createRouter = function (listUrl, collectionName) {
+    this.createRouter = function (collectionName) {
         
         var router = express.Router();
 

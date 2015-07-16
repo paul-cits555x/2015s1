@@ -1,0 +1,13 @@
+﻿extends layout
+
+block content
+    h1= title
+    h2 Meetings
+    p
+        a#addButton(href='javascript:window.location.replace("/champion/add_meeting")') add
+    p
+        each meeting, i in meetings
+            - var passsword = meeting.password ? meeting.password : 'null'
+            a(href='/champion/meetings/#{meeting._id}') #{meeting._id}
+            br 
+ 

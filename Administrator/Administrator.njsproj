@@ -32,6 +32,7 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="registry.js" />
+    <Compile Include="routes\champion.js" />
     <Compile Include="routes\administrator.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="router_factory.js" />
@@ -41,6 +42,9 @@
     <Content Include="package.json" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="README.md" />
+    <Content Include="views\champion_get_meeting.jade" />
+    <Content Include="views\champion.jade" />
+    <Content Include="views\champion_add_meeting.jade" />
     <Content Include="views\administrator_add_user.jade" />
     <Content Include="views\administrator.jade" />
     <Content Include="views\administrator_get_user.jade" />

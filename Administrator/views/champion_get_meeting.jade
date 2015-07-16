@@ -1,0 +1,35 @@
+﻿extends layout
+
+block content
+    h1= title
+    p
+        form#updateForm
+        p
+            span dojo:&nbsp
+            span #{dojo.name}
+        p
+            span password:&nbsp
+            input#password(type="text", placeholder="password", name="password" value="#{meeting.password}") 
+    p
+        a#updateButton(href="#") update
+    p
+        a#removeButton(href="#") remove
+    p#error
+
+    script(src='/javascripts/ajax_gateway.js')
+    script.
+        $(document).ready(function () {
+            ajax_gateway = new AjaxGateway('/meetings/', '/champion');
+            $("#removeButton").click(function () {
+                event.preventDefault();
+                ajax_gateway.remove('#{meeting._id}');
+            });
+            $("#updateButton").click(function () {
+                event.preventDefault();
+                ajax_gateway.update('#{meeting._id}', { 
+                    password: $('#password').val() 
+                });
+
+            });
+        });
+  

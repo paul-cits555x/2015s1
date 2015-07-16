@@ -9,10 +9,12 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var administrator = require('./routes/administrator');
+var champion = require('./routes/champion');
 
 var RouterFactory = require('./router_factory');
-var dojos = RouterFactory.createRouter('/dojos', 'dojo');
-var users = RouterFactory.createRouter('/users', 'user');
+var dojos = RouterFactory.createRouter('dojo');
+var meetings = RouterFactory.createRouter('meeting');
+var users = RouterFactory.createRouter('user');
 
 
 var app = express();
@@ -32,7 +34,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/administrator', administrator);
+app.use('/champion', champion);
 app.use('/dojos', dojos);
+app.use('/meetings', meetings);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

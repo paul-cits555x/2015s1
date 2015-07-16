@@ -4,10 +4,13 @@ block content
     h1= title
     form#updateForm
         p
-            span email 
+            span email:&nbsp;
             input#email(type="email", placeholder="email", name="email" value="#{user.email}") 
+            br
+            span password:&nbsp;
+            input#password(type="text", placeholder="password", name="password" value="#{user.password}") 
         p
-            span hdojos
+            span dojos
             br
             each dojo, i in dojos
                 if user.dojos && -1 < user.dojos.indexOf(dojo._id) 
@@ -39,6 +42,7 @@ block content
                 });
                 ajax_gateway.update('#{user._id}', { 
                     email: $('#email').val(),
+                    password: $('#password').val(),
                     dojos: dojos
                 });
             });

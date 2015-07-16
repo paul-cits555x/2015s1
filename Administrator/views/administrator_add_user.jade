@@ -4,8 +4,12 @@ block content
     h1= title
     p
         form#insertForm
-            span email
-            input#email(type="email", placeholder="email", name="email") 
+            p
+                span email:&nbsp;
+                input#email(type="email", placeholder="email", name="email") 
+            p
+                span password:&nbsp;
+                input#password(type="password", placeholder="password", name="password") 
         a#insert(href="#") add
     p#error  
 
@@ -16,7 +20,8 @@ block content
             $("#insert").click(function () {
                 event.preventDefault();
                 ajax_gateway.insert({ 
-                    email: $('#email').val() 
+                    email: $('#email').val(),
+                    password: $('#password').val()
                 });
             });
         });
