@@ -22,16 +22,16 @@ var RouterFactory = function () {
             });
         });
         
-        //router.get('/:id', function (req, res) {
-        //    var collection = registry.getCollection('user');
-        //    collection.findOne({ _id : req.params.id }, function (err, doc) {
-        //        if (err) {
-        //            res.status(500).json({ error : err })
-        //            return;
-        //        }
-        //        res.json(doc);
-        //    });
-        //});
+        router.get('/:id', function (req, res) {
+            var collection = Registry.getCollection(collectionName);
+            collection.findOne({ _id : req.params.id }, function (err, doc) {
+                if (err) {
+                    res.status(500).json({ error : err })
+                    return;
+                }
+                res.json(doc);
+            });
+        });
         
         router.post('/', function (req, res) {
             var collection = Registry.getCollection(collectionName);

@@ -1,9 +1,21 @@
-﻿var AjaxGateway = function (listUrl, baseUrl) {
+﻿var AjaxGateway = function (url) {
     
     var error = function (jqXHR, textStatus, errorThrown) {
         alert(errorThrown);
     }
     
+    this.get = function (id, callback) {
+        $.ajax({
+            dataType: 'json',
+            error: error,
+            success: function (data, textStatus, jqXHR) {
+                callback(data);
+            },
+            type: 'GET',
+            url: url + id
+        });
+    }
+     
     this.insert = function (data) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
@@ -12,7 +24,7 @@
             error: error,
             success: success,
             type: 'POST',
-            url: listUrl
+            url: url
         });
     }
     
@@ -22,12 +34,11 @@
             error: error,
             success: success,
             type: 'DELETE',
-            url: listUrl + id
+            url: url + id
         });
     }
     
     var success = function (data, textStatus, jqXHR) {
-        window.location.replace(baseUrl);
     }
     
     this.update = function (id, data) {
@@ -38,7 +49,7 @@
             error: error,
             success: success,
             type: 'PUT',
-            url: listUrl + id
+            url: url + id
         });
     }
 

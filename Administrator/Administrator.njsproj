@@ -31,13 +31,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="public\javascripts\list.js" />
+    <Compile Include="public\javascripts\dialog.js" />
     <Compile Include="registry.js" />
     <Compile Include="routes\champion.js" />
     <Compile Include="routes\administrator.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="router_factory.js" />
     <Compile Include="bin\www" />
-    <Compile Include="views\administrator_add_dojo.jade" />
     <Compile Include="public\javascripts\ajax_gateway.js" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\style.styl" />
@@ -45,10 +46,7 @@
     <Content Include="views\champion_get_meeting.jade" />
     <Content Include="views\champion.jade" />
     <Content Include="views\champion_add_meeting.jade" />
-    <Content Include="views\administrator_add_user.jade" />
     <Content Include="views\administrator.jade" />
-    <Content Include="views\administrator_get_user.jade" />
-    <Content Include="views\administrator_get_dojo.jade" />
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />
     <Content Include="views\error.jade" />
