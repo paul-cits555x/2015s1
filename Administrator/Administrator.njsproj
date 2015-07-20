@@ -40,6 +40,7 @@
     <Compile Include="router_factory.js" />
     <Compile Include="bin\www" />
     <Compile Include="public\javascripts\ajax_gateway.js" />
+    <Compile Include="views\parts\dojo_dialog.jade" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="README.md" />
@@ -50,6 +51,7 @@
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />
     <Content Include="views\error.jade" />
+    <Content Include="views\parts\user_dialog.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
@@ -59,6 +61,7 @@
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
     <Folder Include="views\" />
+    <Folder Include="views\parts\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
