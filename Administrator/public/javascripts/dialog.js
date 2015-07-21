@@ -32,29 +32,30 @@
         return data;
     }
     
-    var load = function () {
+    this.load = function (callback) {
         if (id != '#user-dialog') {
+            callback();
             return;
         }
         ajax_gateway = new AjaxGateway('dojo');
         ajax_gateway.get(function (data) {
             var divs = [];
             $.each(data, function (i, dojo) {
-                var div = $('<div/>')
-                    .addClass('checkbox');
                 var label = $('<label/>');
-                label.text(dojo.name);             
                 var input = $('<input/>').attr({
                     type: 'checkbox',
                     name: 'dojos[]', 
                     value: dojo._id
                 });
-                input.css({ left: "20px" });        
                 label.append(input);
+                label.append(dojo.name);
+                var div = $('<div/>')
+                    .addClass('checkbox');
                 div.append(label);
                 divs.push(div);
             });
             $(id + '-dojos').empty().append(divs);
+            callback();
         });
     }
     
@@ -70,13 +71,11 @@
             handler(result);
         });
         
-        load();
-
         $(id).modal();
 
     }
     
-    this.resetData = function (data) {      
+    this.resetData = function (data) {
         $(id + ' input').each(function () {
             var arrayName = getArrayName(this.name);
             if (arrayName) {

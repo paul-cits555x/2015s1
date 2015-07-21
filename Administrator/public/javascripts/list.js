@@ -23,23 +23,25 @@
                     name = 'null';
                 }
                 item.text(name);
-                item.click(function () {  
+                item.click(function () {
                     var _id = $(this).val();
-                    ajax_gateway.get(_id, function (data) {
-                        dialog.setData(data);
-                        dialog.modal(function (result) {
-                            switch (result) {
-                                case 'remove':
-                                    ajax_gateway.remove(_id, load);
-                                    break;
-                                case 'ok':
-                                    ajax_gateway.update(_id, dialog.getData(), load);
-                                    break;
-                                default:
-                                    break;
-                            }
+                    dialog.load(function () { 
+                        ajax_gateway.get(_id, function (data) {
+                            dialog.setData(data);
+                            dialog.modal(function (result) {
+                                switch (result) {
+                                    case 'remove':
+                                        ajax_gateway.remove(_id, load);
+                                        break;
+                                    case 'ok':
+                                        ajax_gateway.update(_id, dialog.getData(), load);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            });
                         });
-                    });                          
+                    });                     
                 });
                 items.push(item);
             });
@@ -48,11 +50,13 @@
     }
         
     $(id + ' ' + 'button[name="add"]').click(function () {
-        dialog.resetData();
-        dialog.modal(function (result) {
-            if (result == 'ok') {
-                ajax_gateway.insert(dialog.getData(), load);
-            }
+        dialog.load(function () {
+            dialog.resetData();
+            dialog.modal(function (result) {
+                if (result == 'ok') {
+                    ajax_gateway.insert(dialog.getData(), load);
+                }
+            });
         });
     });
     
