@@ -16,17 +16,17 @@ block content
         a#removeButton(href="#") remove
     p#error
 
-    script(src='/javascripts/ajax_gateway.js')
+    script(src='/javascripts/data_gateway.js')
     script.
         $(document).ready(function () {
-            ajax_gateway = new AjaxGateway('/meetings/', '/champion');
+            data_gateway = new DataGateway('/meetings/', '/champion');
             $("#removeButton").click(function () {
                 event.preventDefault();
-                ajax_gateway.remove('#{meeting._id}');
+                data_gateway.remove('#{meeting._id}');
             });
             $("#updateButton").click(function () {
                 event.preventDefault();
-                ajax_gateway.update('#{meeting._id}', { 
+                data_gateway.update('#{meeting._id}', { 
                     password: $('#password').val() 
                 });
 

@@ -31,16 +31,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="public\javascripts\security_gateway.js" />
     <Compile Include="public\javascripts\list.js" />
     <Compile Include="public\javascripts\dialog.js" />
     <Compile Include="registry.js" />
     <Compile Include="routes\champion.js" />
     <Compile Include="routes\administrator.js" />
     <Compile Include="routes\index.js" />
-    <Compile Include="router_factory.js" />
+    <Compile Include="data_service.js" />
     <Compile Include="bin\www" />
-    <Compile Include="public\javascripts\ajax_gateway.js" />
+    <Compile Include="public\javascripts\data_gateway.js" />
+    <Compile Include="security_service.js">
+      <SubType>Code</SubType>
+      <TestFramework>ExportRunner</TestFramework>
+    </Compile>
     <Compile Include="views\parts\dojo_dialog.jade" />
+    <Compile Include="views\sign_out.jade" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="README.md" />
@@ -51,7 +57,9 @@
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />
     <Content Include="views\error.jade" />
+    <Content Include="views\parts\sign_in_dialog.jade" />
     <Content Include="views\parts\user_dialog.jade" />
+    <Content Include="views\sign_in.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />

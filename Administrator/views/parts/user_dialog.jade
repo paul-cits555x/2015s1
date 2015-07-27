@@ -14,6 +14,15 @@
                         label(style="width:100%") Password:
                             input(class="form-control" style="font-weight:normal" type="text", name="password" placeholder="password")                     
                     div(class="form-group")
+                        div(style="font-weight:bold") Role:
+                    div#user-dialog-role
+                        each role, i in roles
+                            div(class="radio")
+                                label
+                                    - var name = role.name ? role.name : 'null'
+                                    input(type="radio" name="roles[]" value=name) 
+                                    | #{name} 
+                    div(class="form-group")
                         div(style="font-weight:bold") Dojos:
                     div#user-dialog-dojos
                         each dojo, i in dojos

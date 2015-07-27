@@ -2,6 +2,8 @@
 
 block content
 
+    a(class="btn btn-default" style="margin-bottom:16pt" href="/sign_out" role="button") Sign out
+
     div#user-list(class="panel panel-default")
         div(class="panel-heading")
             div(role="button" data-toggle="collapse" href="#user-list-collapse" aria-expanded="true" aria-controls="user-list-collapse")
@@ -24,16 +26,16 @@ block content
 
     include ./parts/user_dialog
 
-    script(src='/javascripts/ajax_gateway.js')
+    script(src='/javascripts/data_gateway.js')
     script(src='/javascripts/dialog.js')
     script(src='/javascripts/list.js')
     script.
       
         $(document).ready(function () {
 
-            new List('dojo');
+            List('dojo');
             
-            new List('user');
+            List('user');
  
         });
 

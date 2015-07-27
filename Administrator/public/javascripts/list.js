@@ -1,13 +1,15 @@
-﻿var List = function (type) {
+﻿function List(type) {
     
-    var ajax_gateway = new AjaxGateway(type);
+    var that = {};
+
+    var data_gateway = new DataGateway(type);
             
-    var dialog = new Dialog(type);
+    var dialog = Dialog.createDataDialog(type);
     
     var id = '#' + type + '-list';
                        
     var load = function () {
-        ajax_gateway.get(function (data) {
+        data_gateway.get(function (data) {
             var items = [];
             $.each(data, function (i, data) {
                 var item = $('<button/>').addClass('list-group-item').attr({
@@ -26,15 +28,15 @@
                 item.click(function () {
                     var _id = $(this).val();
                     dialog.load(function () { 
-                        ajax_gateway.get(_id, function (data) {
+                        data_gateway.get(_id, function (data) {
                             dialog.setData(data);
                             dialog.modal(function (result) {
                                 switch (result) {
                                     case 'remove':
-                                        ajax_gateway.remove(_id, load);
+                                        data_gateway.remove(_id, load);
                                         break;
                                     case 'ok':
-                                        ajax_gateway.update(_id, dialog.getData(), load);
+                                        data_gateway.update(_id, dialog.getData(), load);
                                         break;
                                     default:
                                         break;
@@ -54,7 +56,7 @@
             dialog.resetData();
             dialog.modal(function (result) {
                 if (result == 'ok') {
-                    ajax_gateway.insert(dialog.getData(), load);
+                    data_gateway.insert(dialog.getData(), load);
                 }
             });
         });
@@ -62,4 +64,7 @@
     
     load();
 
+    return that;
+
 }
+

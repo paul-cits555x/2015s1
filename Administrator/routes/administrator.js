@@ -1,10 +1,10 @@
 ﻿var express = require('express');
-
-var Registry = require('../registry')
+var Registry = require('../registry');
+var SecurityService = require('../security_service');
 
 var router = express.Router();
 
-router.get('/', function (req, res) {
+router.get('/', SecurityService.authenticated, function (req, res) {
     var c1 = Registry.getCollection('dojo');
     c1.find().toArray(function (err, dojos) {
         if (err) {
@@ -13,7 +13,12 @@ router.get('/', function (req, res) {
         }
         res.render('administrator', {
             title: "Administrator",
-            dojos: dojos
+            dojos: dojos,
+            roles: [
+                { name: "Administrator" },
+                { name: "Champion" },
+                { name: "Mentor" }
+            ]
         });
     });
 });

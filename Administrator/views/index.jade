@@ -1,19 +1,22 @@
 ﻿extends layout
 
 block content
-  h1= title
-  h2 User Roles
-  p
-    a(href='/administrator') Administrator
-  p
-    a(href='/champion') Champion
-
-  p
-    a#mylink(href='#') Administrator (sidebar)
+    
+    h1= title
+    
+    h2 User Roles
+    p
+        a(href='/administrator') Administrator
+    p
+        a(href='/champion') Champion
+    p
+        a#mylink(href='#') Administrator (sidebar)
 
     script.
+
         $(document).ready(function () {
-            $("#mylink").click(function () {
+
+            $('#mylink').click(function () {
                 event.preventDefault();
                 window.open("/administrator", "Administrator - CoderDojo", "menubar=no,"
                     + "toolbar=no," 
@@ -28,6 +31,7 @@ block content
                     + "left=0,"
                     + "top=0");
             });
+
         });
 
 

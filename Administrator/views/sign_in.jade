@@ -1,0 +1,27 @@
+﻿extends layout
+
+block content
+
+    include ./parts/sign_in_dialog
+
+    script(src='/javascripts/dialog.js')
+    script(src='/javascripts/security_gateway.js')
+    script.
+      
+        $(document).ready(function () {
+
+            var dialog = new Dialog('#sign-in-dialog');
+        
+            dialog.modal(function(result) { 
+                if (result == "sign-in") {
+                    var data = dialog.getData();
+                    var gateway = SecurityGateway();
+                    gateway.signIn(data, function(err, res) {
+                        window.location.replace('#{url}');
+                    });
+                }
+            });
+  
+        });
+
+

@@ -1,5 +1,7 @@
-﻿var Dialog = function (type) {
+﻿function Dialog(id) {
     
+    var that = {};
+       
     var getArrayName = function (name) {
         var index = name.indexOf("[]");
         if (index <= -1) {
@@ -11,9 +13,7 @@
         return name.substr(0, index);
     }
     
-    var id = '#' + type + '-dialog';
-
-    this.getData = function () {
+    that.getData = function () {
         var data = {}
         $(id + ' input').each(function () {
             var arrayName = getArrayName(this.name);
@@ -32,13 +32,13 @@
         return data;
     }
     
-    this.load = function (callback) {
+    that.load = function (callback) {
         if (id != '#user-dialog') {
             callback();
             return;
         }
-        ajax_gateway = new AjaxGateway('dojo');
-        ajax_gateway.get(function (data) {
+        data_gateway = new DataGateway('dojo');
+        data_gateway.get(function (data) {
             var divs = [];
             $.each(data, function (i, dojo) {
                 var label = $('<label/>');
@@ -59,7 +59,7 @@
         });
     }
     
-    this.modal = function (handler) {
+    that.modal = function (handler) {
         
         var result;
         
@@ -75,7 +75,7 @@
 
     }
     
-    this.resetData = function (data) {
+    that.resetData = function (data) {
         $(id + ' input').each(function () {
             var arrayName = getArrayName(this.name);
             if (arrayName) {
@@ -87,7 +87,7 @@
         });
     }
     
-    this.setData = function (data) {
+    that.setData = function (data) {
         $(id + ' input').each(function () {
             var arrayName = getArrayName(this.name);
             if (arrayName) {
@@ -100,4 +100,11 @@
         });
     }
 
+    return that;
+
+}
+
+Dialog.createDataDialog = function(type) {
+    var id = '#' + type + '-dialog';
+    return Dialog(id);
 }

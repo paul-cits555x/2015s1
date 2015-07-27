@@ -7,15 +7,15 @@ var bodyParser = require('body-parser');
 
 // ###
 
-var routes = require('./routes/index');
+var passport = require('passport');
+var DataService = require('./data_service');
+var SecurityService = require('./security_service');
+
+var index = require('./routes/index');
 var administrator = require('./routes/administrator');
 var champion = require('./routes/champion');
 
-var RouterFactory = require('./router_factory');
-var dojos = RouterFactory.createRouter('dojo');
-var meetings = RouterFactory.createRouter('meeting');
-var users = RouterFactory.createRouter('user');
-
+passport.use(SecurityService.createStrategy());
 
 var app = express();
 
@@ -29,15 +29,22 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    receive: false,
+    saveUnitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
+app.use('/', SecurityService.createRouter());
+app.use('/', index);
 app.use('/administrator', administrator);
 app.use('/champion', champion);
-app.use('/dojos', dojos);
-app.use('/meetings', meetings);
-app.use('/users', users);
+app.use('/dojos', DataService.createRouter('dojo'));
+app.use('/meetings', DataService.createRouter('meeting'));
+app.use('/users', DataService.createRouter('user'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

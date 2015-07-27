@@ -16,13 +16,13 @@ block content
        a#insert(href="/champion") add
     p#error  
 
-    script(src='/javascripts/ajax_gateway.js')
+    script(src='/javascripts/data_gateway.js')
     script.
         $(document).ready(function () {
-            ajax_gateway = new AjaxGateway('/meetings/', '/champion');
+            data_gateway = new DataGateway('/meetings/', '/champion');
             $("#insert").click(function () {
                 event.preventDefault();
-                ajax_gateway.insert({ 
+                data_gateway.insert({ 
                     dojo: $('#dojo').val(),
                     password: $('#password').val() 
                 });
