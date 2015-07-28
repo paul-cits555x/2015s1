@@ -32,31 +32,10 @@
         return data;
     }
     
+    that.id = id;
+
     that.load = function (callback) {
-        if (id != '#user-dialog') {
-            callback();
-            return;
-        }
-        data_gateway = new DataGateway('dojo');
-        data_gateway.get(function (data) {
-            var divs = [];
-            $.each(data, function (i, dojo) {
-                var label = $('<label/>');
-                var input = $('<input/>').attr({
-                    type: 'checkbox',
-                    name: 'dojos[]', 
-                    value: dojo._id
-                });
-                label.append(input);
-                label.append(dojo.name);
-                var div = $('<div/>')
-                    .addClass('checkbox');
-                div.append(label);
-                divs.push(div);
-            });
-            $(id + '-dojos').empty().append(divs);
-            callback();
-        });
+        callback();
     }
     
     that.modal = function (handler) {
@@ -104,7 +83,12 @@
 
 }
 
-Dialog.createDataDialog = function(type) {
+function DataDialog(type) {
+
     var id = '#' + type + '-dialog';
-    return Dialog(id);
+    
+    that = Dialog(id);
+
+    return that;
 }
+

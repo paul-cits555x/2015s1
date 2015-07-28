@@ -44,6 +44,7 @@ app.use('/administrator', administrator);
 app.use('/champion', champion);
 app.use('/dojos', DataService.createRouter('dojo'));
 app.use('/meetings', DataService.createRouter('meeting'));
+app.use('/roles', DataService.createRouter('role'));
 app.use('/users', DataService.createRouter('user'));
 
 // catch 404 and forward to error handler

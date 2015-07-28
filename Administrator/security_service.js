@@ -63,18 +63,18 @@ var SecurityService = function () {
     this.createStrategy = function () {
                
         return new LocalStrategy({
-            usernameField : 'email',
+            usernameField : 'username',
             passwordField : 'password',
             passReqToCallback : true
-        }, function (req, email, password, done) {
+        }, function (req, username, password, done) {
             process.nextTick(function () {              
                 var users = Registry.getCollection('user');
-                users.findOne({ email : email }, function (err, user) {
+                users.findOne({ username: username }, function (err, user) {
                     if (err) {
                         return done(err);
                     }
                     if (!user) {
-                        return done(null, false, { message: 'Unknown user ' + email });
+                        return done(null, false, { message: 'Unknown user ' + username });
                     }
                     if (user.password != password) {
                         return done(null, false, { message: 'Invalid password' });

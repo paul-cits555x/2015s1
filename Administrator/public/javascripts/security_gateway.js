@@ -2,10 +2,13 @@
     
     var that = {};
 
-    that.signIn = function (data, callback) {
+    that.signIn = function (username, password, callback) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data),
+            data: JSON.stringify({
+                username: username,
+                password: password
+            }),
             dataType: 'json',
             error: function (jqXHR, textStatus, errorThrown) {
                 callback(errorThrown, null);

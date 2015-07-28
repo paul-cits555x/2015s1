@@ -14,9 +14,9 @@ block content
         
             dialog.modal(function(result) { 
                 if (result == "sign-in") {
-                    var data = dialog.getData();
                     var gateway = SecurityGateway();
-                    gateway.signIn(data, function(err, res) {
+                    var data = dialog.getData();
+                    gateway.signIn(data.email, data.password, function(err, res) {
                         window.location.replace('#{url}');
                     });
                 }

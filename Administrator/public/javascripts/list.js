@@ -1,15 +1,17 @@
-﻿function List(type) {
+﻿function List(type, dialog) {
     
     var that = {};
 
-    var data_gateway = new DataGateway(type);
-            
-    var dialog = Dialog.createDataDialog(type);
+    var data_gateway = DataGateway(type);
     
-    var id = '#' + type + '-list';
-                       
-    var load = function () {
-        data_gateway.get(function (data) {
+    that.getItemText = function (data) {
+        return data._id;
+    }
+    
+    that.id = '#' + type + '-list'; 
+       
+    that.load = function () {
+        data_gateway.get(function (err, data) {
             var items = [];
             $.each(data, function (i, data) {
                 var item = $('<button/>').addClass('list-group-item').attr({
@@ -17,52 +19,67 @@
                     name: 'get', 
                     value: data._id
                 });
-                var name = data.name;
-                if (!name) {
-                    name = data.email;
-                }
-                if (!name) {
-                    name = 'null';
-                }
-                item.text(name);
+                item.text(that.getItemText(data));
                 item.click(function () {
                     var _id = $(this).val();
-                    dialog.load(function () { 
-                        data_gateway.get(_id, function (data) {
+                    dialog.load(function () {
+                        data_gateway.get(_id, function (err, data) {
                             dialog.setData(data);
                             dialog.modal(function (result) {
                                 switch (result) {
                                     case 'remove':
-                                        data_gateway.remove(_id, load);
+                                        data_gateway.remove(_id, function () {
+                                            that.load();
+                                        });
                                         break;
                                     case 'ok':
-                                        data_gateway.update(_id, dialog.getData(), load);
+                                        data = dialog.getData();
+                                        that.validate(data, function () {
+                                            if (err) {
+                                               ; 
+                                            }
+                                            data_gateway.update(_id, data, function (err, data) {
+                                                that.load();
+                                            });
+                                        });
                                         break;
                                     default:
                                         break;
                                 }
                             });
                         });
-                    });                     
+                    });
                 });
                 items.push(item);
             });
-            $(id + '-items').empty().append(items);
+            $(that.id + '-items').empty().append(items);
         });
     }
-        
-    $(id + ' ' + 'button[name="add"]').click(function () {
+    
+    that.validate = function (data, callback) {
+        callback(null, data);
+    }
+            
+    $(that.id + ' ' + 'button[name="add"]').click(function () {
         dialog.load(function () {
             dialog.resetData();
             dialog.modal(function (result) {
                 if (result == 'ok') {
-                    data_gateway.insert(dialog.getData(), load);
+                    data = dialog.getData();
+                    that.validate(data, function (err, data) {
+                        if (err) {
+                            ;
+                        }
+                        data_gateway.insert(data, function () {
+                            that.load();
+                        });
+                    });
                 }
             });
         });
     });
     
-    load();
+    that.load();
 
     return that;
 

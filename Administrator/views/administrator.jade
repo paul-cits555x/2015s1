@@ -22,7 +22,18 @@ block content
                 button(type="button" class="btn" name="add") Add
             div#dojo-list-items(class="list-group")
  
+    div#role-list(class="panel panel-default")
+        div(class="panel-heading")
+            div(role="button" data-toggle="collapse" href="#role-list-collapse" aria-expanded="true" aria-controls="role-list-collapse")
+                | Roles
+        div(id="role-list-collapse" class="panel-collapse collapse in")
+            div(class="panel-body")
+                button(type="button" class="btn" name="add") Add
+            div#role-list-items(class="list-group")
+
     include ./parts/dojo_dialog
+
+    include ./parts/role_dialog
 
     include ./parts/user_dialog
 
@@ -33,10 +44,24 @@ block content
       
         $(document).ready(function () {
 
-            List('dojo');
-            
-            List('user');
- 
+            list = List('dojo', DataDialog('dojo'));
+            list.getItemText = function(data) {
+                return data.name;
+            }
+           
+            list = List('role', DataDialog('role'));
+            list.getItemText = function(data) {
+                return data.name;
+            }
+           
+            list = List('user', UserDialog());
+            list.getItemText = function(data) {
+                return data.firstName + ' ' + data.lastName;
+            }
+            list.validate = function(data, callback)  {
+                data.username = data.email;
+                callback(null, data);
+            }
         });
 
 

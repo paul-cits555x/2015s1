@@ -1,18 +1,18 @@
-﻿var DataGateway = function (type) {
+﻿function DataGateway(type) {
     
-    var error = function (jqXHR, textStatus, errorThrown) {
-        alert(errorThrown);
-    }
-    
-    this.get = function () {
+    var that = {};
+        
+    that.get = function () {
         var callback = arguments[arguments.length - 1];
         switch (arguments.length) {         
             case 1:
                 $.ajax({
                     dataType: 'json',
-                    error: error,
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        callback(errorThrown, null);
+                    },
                     success: function (data, textStatus, jqXHR) {
-                        callback(data);
+                        callback(null, data);
                     },
                     type: 'GET',
                     url: url
@@ -22,9 +22,11 @@
                 _id = arguments[0];
                 $.ajax({
                     dataType: 'json',
-                    error: error,
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        callback(errorThrown, null);
+                    },
                     success: function (data, textStatus, jqXHR) {
-                        callback(data);
+                        callback(null, data);
                     },
                     type: 'GET',
                     url: url + _id
@@ -35,40 +37,46 @@
         }
     }
      
-    this.insert = function (data, callback) {
+    that.insert = function (data, callback) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             dataType: 'json',
-            error: error,
+            error: function (jqXHR, textStatus, errorThrown) {
+                callback(errorThrown, null);
+            },
             success: function (data, textStatus, jqXHR) {
-                callback(data);
+                callback(null, data);
             },
             type: 'POST',
             url: url
         });
     }
     
-    this.remove = function (id, callback) {
+    that.remove = function (id, callback) {
         $.ajax({
             dataType: 'json',
-            error: error,
+            error: function (jqXHR, textStatus, errorThrown) {
+                callback(errorThrown, null);
+            },
             success: function (data, textStatus, jqXHR) {
-                callback(data);
+                callback(null, data);
             },
             type: 'DELETE',
             url: url + id
         });
     }
         
-    this.update = function (id, data, callback) {
+    that.update = function (id, data, callback) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             dataType: 'json',
-            error: error,
+            error: function (jqXHR, textStatus, errorThrown) {
+                callback(errorThrown, null);
+            },
             success: function (data, textStatus, jqXHR) {
-                callback(data);
+                callback(null, data);
             },
             type: 'PUT',
             url: url + id
@@ -76,5 +84,7 @@
     }
 
     var url = '/' + type + 's/';
+
+    return that;
 
 }

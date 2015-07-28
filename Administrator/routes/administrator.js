@@ -11,14 +11,13 @@ router.get('/', SecurityService.authenticated, function (req, res) {
             res.status(500);
             return;
         }
-        res.render('administrator', {
-            title: "Administrator",
-            dojos: dojos,
-            roles: [
-                { name: "Administrator" },
-                { name: "Champion" },
-                { name: "Mentor" }
-            ]
+        var c2 = Registry.getCollection('role');
+        c2.find().toArray(function (err, roles) {
+            res.render('administrator', {
+                title: "Administrator",
+                dojos: dojos,
+                roles: roles
+            });
         });
     });
 });
